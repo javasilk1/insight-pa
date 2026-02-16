@@ -1,0 +1,36 @@
+[
+  {
+    "name": "Qdrant Health",
+    "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+        "raw": "http://localhost:6333/healthz",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "6333",
+        "path": ["healthz"]
+      }
+    }
+  },
+  {
+    "name": "Search (placeholder - endpoint da implementare)",
+    "request": {
+      "method": "POST",
+      "header": [
+        { "key": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "mode": "raw",
+        "raw": "{\"query\": \"verifica abuso piscina\"}"
+      },
+      "url": {
+        "raw": "http://localhost:8000/api/chat/query",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["api", "chat", "query"]
+      }
+    }
+  }
+]

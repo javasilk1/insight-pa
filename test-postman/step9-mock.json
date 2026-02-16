@@ -1,0 +1,73 @@
+[
+  {
+    "name": "Generate mock document - Verbale Conforme",
+    "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+        "raw": "http://localhost:8000/api/mock/generate-document?building_id=11111111-1111-1111-1111-111111111111&document_type=verbale&scenario=conforme",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["api", "mock", "generate-document"],
+        "query": [
+          {"key": "building_id", "value": "11111111-1111-1111-1111-111111111111"},
+          {"key": "document_type", "value": "verbale"},
+          {"key": "scenario", "value": "conforme"}
+        ]
+      }
+    }
+  },
+  {
+    "name": "Generate mock document - Verbale Violazione Grave",
+    "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+        "raw": "http://localhost:8000/api/mock/generate-document?building_id=33333333-3333-3333-3333-333333333333&document_type=verbale&scenario=violazione_grave",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["api", "mock", "generate-document"],
+        "query": [
+          {"key": "building_id", "value": "33333333-3333-3333-3333-333333333333"},
+          {"key": "document_type", "value": "verbale"},
+          {"key": "scenario", "value": "violazione_grave"}
+        ]
+      }
+    }
+  },
+  {
+    "name": "Generate mock document - Satellite",
+    "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+        "raw": "http://localhost:8000/api/mock/generate-document?building_id=22222222-2222-2222-2222-222222222222&document_type=satellite&scenario=violazione_leggera",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["api", "mock", "generate-document"],
+        "query": [
+          {"key": "building_id", "value": "22222222-2222-2222-2222-222222222222"},
+          {"key": "document_type", "value": "satellite"},
+          {"key": "scenario", "value": "violazione_leggera"}
+        ]
+      }
+    }
+  },
+  {
+    "name": "Get building documents",
+    "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+        "raw": "http://localhost:8000/api/documents/building/33333333-3333-3333-3333-333333333333",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["api", "documents", "building", "33333333-3333-3333-3333-333333333333"]
+      }
+    }
+  }
+]

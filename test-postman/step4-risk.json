@@ -1,0 +1,76 @@
+[
+  {
+    "name": "Calculate risk - caso ROSSO (superficie + vincolo costiero)",
+    "request": {
+      "method": "POST",
+      "header": [
+        { "key": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "mode": "raw",
+        "raw": "{\"superficie_catastale\": 150, \"superficie_autorizzata\": 100, \"distanza_mare\": 250}"
+      },
+      "url": {
+        "raw": "http://localhost:8000/api/risk/calculate",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["api", "risk", "calculate"]
+      }
+    }
+  },
+  {
+    "name": "Calculate risk - caso VERDE (tutto regolare)",
+    "request": {
+      "method": "POST",
+      "header": [
+        { "key": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "mode": "raw",
+        "raw": "{\"superficie_catastale\": 100, \"superficie_autorizzata\": 120, \"distanza_mare\": 500, \"has_permesso\": true}"
+      },
+      "url": {
+        "raw": "http://localhost:8000/api/risk/calculate",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["api", "risk", "calculate"]
+      }
+    }
+  },
+  {
+    "name": "Calculate risk - caso GIALLO (permesso mancante)",
+    "request": {
+      "method": "POST",
+      "header": [
+        { "key": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "mode": "raw",
+        "raw": "{\"superficie_catastale\": 100, \"superficie_autorizzata\": 100, \"distanza_mare\": 500, \"has_permesso\": false, \"satellite_change_pct\": 25}"
+      },
+      "url": {
+        "raw": "http://localhost:8000/api/risk/calculate",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["api", "risk", "calculate"]
+      }
+    }
+  },
+  {
+    "name": "Calculate risk from DB - edificio Via Poetto",
+    "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+        "raw": "http://localhost:8000/api/risk/calculate-from-db/33333333-3333-3333-3333-333333333333",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["api", "risk", "calculate-from-db", "33333333-3333-3333-3333-333333333333"]
+      }
+    }
+  }
+]

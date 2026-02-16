@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+build/
+dist/
+*.egg-info/
+
+# Docker volumes
+postgres_data/
+qdrant_data/
+minio_data/
+
+# Generated files
+init-db/02_insert_buildings.sql
+backend/app/vector_store/
+
+# Logs
+*.log

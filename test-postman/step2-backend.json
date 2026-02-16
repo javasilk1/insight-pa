@@ -1,0 +1,63 @@
+[
+  {
+    "name": "Healthcheck",
+    "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+        "raw": "http://localhost:8000/health",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["health"]
+      }
+    }
+  },
+  {
+    "name": "Get all buildings",
+    "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+        "raw": "http://localhost:8000/api/buildings",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["api", "buildings"]
+      }
+    }
+  },
+  {
+    "name": "Get building by id",
+    "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+        "raw": "http://localhost:8000/api/buildings/1",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["api", "buildings", "1"]
+      }
+    }
+  },
+  {
+    "name": "Get buildings nearby",
+    "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+        "raw": "http://localhost:8000/api/buildings/nearby?lat=39.198&lon=9.168&distance=300",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["api", "buildings", "nearby"],
+        "query": [
+          {"key": "lat", "value": "39.198"},
+          {"key": "lon", "value": "9.168"},
+          {"key": "distance", "value": "300"}
+        ]
+      }
+    }
+  }
+]

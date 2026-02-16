@@ -1,0 +1,76 @@
+[
+  {
+    "name": "Chat Query - Piscine abusive",
+    "request": {
+      "method": "POST",
+      "header": [
+        { "key": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "mode": "raw",
+        "raw": "{\"question\": \"Quali edifici hanno piscine abusive?\", \"building_id\": null}"
+      },
+      "url": {
+        "raw": "http://localhost:8000/api/chat/query",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["api", "chat", "query"]
+      }
+    }
+  },
+  {
+    "name": "Chat Query - Per edificio specifico",
+    "request": {
+      "method": "POST",
+      "header": [
+        { "key": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "mode": "raw",
+        "raw": "{\"question\": \"Quali sono i rischi per questo edificio?\", \"building_id\": \"33333333-3333-3333-3333-333333333333\"}"
+      },
+      "url": {
+        "raw": "http://localhost:8000/api/chat/query",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["api", "chat", "query"]
+      }
+    }
+  },
+  {
+    "name": "Chat Similar Cases",
+    "request": {
+      "method": "POST",
+      "header": [
+        { "key": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "mode": "raw",
+        "raw": "{\"building_id\": \"33333333-3333-3333-3333-333333333333\", \"limit\": 5}"
+      },
+      "url": {
+        "raw": "http://localhost:8000/api/chat/similar-cases",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["api", "chat", "similar-cases"]
+      }
+    }
+  },
+  {
+    "name": "Chat Suggestions",
+    "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+        "raw": "http://localhost:8000/api/chat/suggestions",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["api", "chat", "suggestions"]
+      }
+    }
+  }
+]

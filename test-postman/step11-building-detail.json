@@ -1,0 +1,67 @@
+[
+  {
+    "name": "Get Building Detail",
+    "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+        "raw": "http://localhost:8000/api/buildings/6f5e5b18-e6a0-4138-8040-63d62973cc06",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["api", "buildings", "6f5e5b18-e6a0-4138-8040-63d62973cc06"]
+      }
+    }
+  },
+  {
+    "name": "Get Risk History",
+    "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+        "raw": "http://localhost:8000/api/risk-history/6f5e5b18-e6a0-4138-8040-63d62973cc06",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["api", "risk-history", "6f5e5b18-e6a0-4138-8040-63d62973cc06"]
+      }
+    }
+  },
+  {
+    "name": "Get Risk History Summary",
+    "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+        "raw": "http://localhost:8000/api/risk-history/6f5e5b18-e6a0-4138-8040-63d62973cc06/summary",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["api", "risk-history", "6f5e5b18-e6a0-4138-8040-63d62973cc06", "summary"]
+      }
+    }
+  },
+  {
+    "name": "Record Risk Change",
+    "request": {
+      "method": "POST",
+      "header": [
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mode": "raw",
+        "raw": "{\n  \"building_id\": \"6f5e5b18-e6a0-4138-8040-63d62973cc06\",\n  \"old_risk_score\": 12.0,\n  \"new_risk_score\": 45.5,\n  \"triggered_rules\": [\"superficie_eccedente\", \"satellite_change\"],\n  \"reason\": \"Nuovo documento caricato - variazione catastale rilevante\"\n}\n"
+      },
+      "url": {
+        "raw": "http://localhost:8000/api/risk-history/6f5e5b18-e6a0-4138-8040-63d62973cc06",
+        "protocol": "http",
+        "host": ["localhost"],
+        "port": "8000",
+        "path": ["api", "risk-history", "6f5e5b18-e6a0-4138-8040-63d62973cc06"]
+      }
+    }
+  }
+]

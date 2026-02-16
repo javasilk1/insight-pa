@@ -1,0 +1,34 @@
+{
+  "frazioni": [
+    {
+      "name": "centro",
+      "coordinates": [39.2414, 9.1837],
+      "buildings": 14,
+      "prevalent_abuse_types": ["variazione_destinazione_uso", "ampliamento_non_autorizzato"]
+    },
+    {
+      "name": "flumini",
+      "coordinates": [39.2200, 9.1600],
+      "buildings": 12,
+      "prevalent_abuse_types": ["piscina_abusiva", "pergole_senza_permesso"]
+    },
+    {
+      "name": "poetto",
+      "coordinates": [39.1980, 9.1680],
+      "buildings": 12,
+      "prevalent_abuse_types": ["vincolo_costiero", "ampliamento_non_autorizzato"]
+    },
+    {
+      "name": "geremeas",
+      "coordinates": [39.2350, 9.1900],
+      "buildings": 11,
+      "prevalent_abuse_types": ["difformita_prospetto", "documentazione_incompleta"]
+    },
+    {
+      "name": "mare_pintau",
+      "coordinates": [39.2500, 9.1700],
+      "buildings": 11,
+      "prevalent_abuse_types": ["vincolo_costiero", "piscina_abusiva", "pergole_senza_permesso"]
+    }
+  ]
+}
