@@ -37,7 +37,7 @@ echo ""
 echo "6️⃣ Test API endpoint..."
 echo ""
 echo "   📍 GET /api/buildings (primi 3 edifici):"
-curl -s http://localhost:8000/api/buildings 2>/dev/null | jq '.[0:3] | .[] | {id, address, quartu_frazione, risk_score}' || echo "⚠️ API non disponibile"
+curl -s http://localhost:8000/api/buildings 2>/dev/null | jq '.[0:3] | .[] | {id, address, area_name, risk_score}' || echo "⚠️ API non disponibile"
 
 echo ""
 echo "=================================="

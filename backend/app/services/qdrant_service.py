@@ -10,7 +10,7 @@ class QdrantService:
         self.client = QdrantClient(url=settings.QDRANT_URL)
         self.pool = pool
 
-    def create_collection(self, collection_name: str = "quartu_documents"):
+    def create_collection(self, collection_name: str = "insightpa_documents"):
         collections = self.client.get_collections().collections
         existing = {c.name for c in collections}
         if collection_name in existing:
@@ -20,7 +20,7 @@ class QdrantService:
             vectors_config=models.VectorParams(size=384, distance=models.Distance.COSINE),
         )
 
-    async def upsert_document(self, document_id: str, text: str, metadata: dict, collection_name: str = "quartu_documents"):
+    async def upsert_document(self, document_id: str, text: str, metadata: dict, collection_name: str = "insightpa_documents"):
         self.create_collection(collection_name)
         vector = embedding_service.encode(text)
         point_id = str(uuid.uuid4())
@@ -45,7 +45,7 @@ class QdrantService:
 
         return point_id
 
-    def search(self, query: str, limit: int = 10, collection_name: str = "quartu_documents"):
+    def search(self, query: str, limit: int = 10, collection_name: str = "insightpa_documents"):
         self.create_collection(collection_name)
         vector = embedding_service.encode(query)
         return self.client.search(
@@ -54,7 +54,7 @@ class QdrantService:
             limit=limit,
         )
 
-    def search_by_building(self, building_id: str, query: str, limit: int = 10, collection_name: str = "quartu_documents"):
+    def search_by_building(self, building_id: str, query: str, limit: int = 10, collection_name: str = "insightpa_documents"):
         self.create_collection(collection_name)
         vector = embedding_service.encode(query)
         building_filter = models.Filter(
@@ -67,7 +67,7 @@ class QdrantService:
             query_filter=building_filter,
         )
 
-    async def find_similar_cases(self, building_id: str, limit: int = 5, collection_name: str = "quartu_documents"):
+    async def find_similar_cases(self, building_id: str, limit: int = 5, collection_name: str = "insightpa_documents"):
         if not self.pool:
             return []
 

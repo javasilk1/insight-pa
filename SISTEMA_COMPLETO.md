@@ -1,4 +1,4 @@
-# 🏢 Quartu Abusivismo - Sistema di Rilevazione Abusi Edilizi
+# �️ InsightPA - Sistema di Rilevazione Abusi Edilizi
 
 ## ✅ Implementazione Completata
 
@@ -83,11 +83,11 @@
 ### Infrastruttura (Docker Compose)
 
 **Servizi:**
-- quartu-postgres (PostgreSQL 15 + PostGIS 3.3)
-- quartu-backend (FastAPI Python 3.11)
-- quartu-frontend (Nginx + React build)
-- quartu-qdrant (Qdrant vector DB)
-- quartu-minio (MinIO S3)
+- insightpa-postgres (PostgreSQL 15 + PostGIS 3.3)
+- insightpa-backend (FastAPI Python 3.11)
+- insightpa-frontend (Nginx + React build)
+- insightpa-qdrant (Qdrant vector DB)
+- insightpa-minio (MinIO S3)
 
 ## 🚀 Come Avviare
 

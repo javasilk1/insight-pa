@@ -110,7 +110,7 @@ export default function Dashboard() {
 
     // Filtro frazioni
     if (!frazioni.all) {
-      result = result.filter((b) => frazioni[b.quartu_frazione]);
+      result = result.filter((b) => frazioni[b.area_name]);
     }
 
     // Filtro ricerca
@@ -261,7 +261,7 @@ export default function Dashboard() {
             🏛️ INSIGHTPA · Rilevamento Abusivismo Edilizio
           </Typography>
           <Typography variant="h6">
-            🧑‍⚖️ Comune di Quartu S.E.
+            🧑‍⚖️ Sistema InsightPA
           </Typography>
         </Box>
       </Paper>
@@ -452,7 +452,7 @@ export default function Dashboard() {
                       >
                         <ListItemText
                           primary={b.address}
-                          secondary={`Rischio: ${b.risk_score?.toFixed?.(1) || b.risk_score}% · ${b.quartu_frazione}`}
+                          secondary={`Rischio: ${b.risk_score?.toFixed?.(1) || b.risk_score}% · ${b.area_name}`}
                         />
                         <Button size="small" onClick={() => navigate(`/edificio/${b.id}`)}>
                           Dettaglio
@@ -651,7 +651,7 @@ export default function Dashboard() {
 
             <Box sx={{ mt: 2, textAlign: 'center' }}>
               <Typography variant="body2" color="textSecondary">
-                TOTALE: {stats.total} edifici monitorati a Quartu Sant'Elena
+                TOTALE: {stats.total} edifici monitorati nel sistema
               </Typography>
             </Box>
           </Paper>

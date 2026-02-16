@@ -30,7 +30,7 @@ async def shutdown():
 
 @app.get("/")
 async def root():
-    return {"message": "Benvenuto nel backend FastAPI per Quartu Abusivismo!"}
+    return {"message": "Benvenuto nel backend FastAPI per InsightPA!"}
 
 @app.get("/health")
 async def health():

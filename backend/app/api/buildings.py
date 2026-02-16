@@ -41,14 +41,14 @@ def get_recommendation(risk_score: float, violations: list) -> dict:
 @router.get("/api/buildings", response_model=List[Building])
 async def get_buildings(request: Request):
     async with request.app.state.pool.acquire() as conn:
-        rows = await conn.fetch("SELECT id, address, quartu_frazione, risk_score, status FROM buildings")
+        rows = await conn.fetch("SELECT id, address, area_name, risk_score, status FROM buildings")
         return [dict(row) for row in rows]
 
 @router.get("/api/buildings/nearby", response_model=List[Building])
 async def get_buildings_nearby(lat: float, lon: float, distance: float, request: Request):
     async with request.app.state.pool.acquire() as conn:
         rows = await conn.fetch(
-            "SELECT id, address, quartu_frazione, risk_score, status FROM get_buildings_within_distance($1, $2, $3)",
+            "SELECT id, address, area_name, risk_score, status FROM get_buildings_within_distance($1, $2, $3)",
             lat, lon, distance
         )
         return [dict(row) for row in rows]
@@ -57,7 +57,7 @@ async def get_buildings_nearby(lat: float, lon: float, distance: float, request:
 async def get_building(id: UUID, request: Request):
     async with request.app.state.pool.acquire() as conn:
         row = await conn.fetchrow(
-            "SELECT id, address, quartu_frazione, risk_score, status, cadastral_data, coordinates FROM buildings WHERE id = $1",
+            "SELECT id, address, area_name, risk_score, status, cadastral_data, coordinates FROM buildings WHERE id = $1",
             str(id),
         )
         if not row:
@@ -131,7 +131,7 @@ async def get_building(id: UUID, request: Request):
         return {
             "id": str(building["id"]),
             "address": building["address"],
-            "quartu_frazione": building["quartu_frazione"],
+            "area_name": building["area_name"],
             "risk_score": risk_result["risk_score"],
             "status": building["status"],
             "cadastral_data": cadastral,

@@ -142,7 +142,7 @@ async def suggestions():
     return {
         "suggerimenti": [
             "Quali edifici hanno piscine abusive?",
-            "Quali sono i rischi maggiori a Quartu?",
+            "Quali sono i rischi maggiori in zona?",
             "Quali edifici violano il vincolo costiero?",
             "Quali documentazioni sono risultate contraddittorie?",
             "Mostra i casi di abuso più gravi.",

@@ -40,7 +40,7 @@ class DocumentFactory:
             alignment=1,  # CENTER
         )
 
-        story.append(Paragraph("COMUNE DI QUARTU SANT'ELENA", title_style))
+        story.append(Paragraph("COMUNE - UFFICIO PIANIFICAZIONE", title_style))
         story.append(Paragraph("Provincia di Cagliari", styles["Normal"]))
         story.append(Spacer(1, 0.5*cm))
 
@@ -99,7 +99,7 @@ class DocumentFactory:
 
         # QR code finto
         qr = qrcode.QRCode(version=1, box_size=10, border=2)
-        qr.add_data(f"quartu://doc/{num_protocollo}")
+        qr.add_data(f"insightpa://doc/{num_protocollo}")
         qr.make(fit=True)
         qr_img = qr.make_image(fill_color="black", back_color="white")
 

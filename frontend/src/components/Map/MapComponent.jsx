@@ -65,7 +65,7 @@ export default function MapComponent({ center, buildings, zoom = 14 }) {
                 <br />
                 Rischio: <strong>{building.risk_score?.toFixed(1) || 0}%</strong> ({getRiskLevel(building.risk_score || 0)})
                 <br />
-                Frazione: {building.quartu_frazione}
+                Area: {building.area_name}
                 <br />
                 <Button
                   size="small"

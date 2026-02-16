@@ -1,44 +1,44 @@
 version: '3.9'
 services:
-  quartu-postgres:
+  postgres:
     platform: linux/amd64  # ← FORZA AMD64 (emulazione)
 
     image: postgis/postgis:15-3.3
     
-    container_name: quartu-postgres
+    container_name: insightpa-postgres
     environment:
-      POSTGRES_USER: quartu_user
-      POSTGRES_PASSWORD: quartu_pass
-      POSTGRES_DB: quartu_abusivismo
+      POSTGRES_USER: insightpa_user
+      POSTGRES_PASSWORD: insightpa_pass
+      POSTGRES_DB: insightpa_db
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init-db:/docker-entrypoint-initdb.d
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U quartu_user"]
+      test: ["CMD-SHELL", "pg_isready -U insightpa_user"]
       interval: 10s
       timeout: 5s
       retries: 5
     networks:
-      - quartu-network
+      - insightpa-network
 
   backend:
     build: ./backend
-    container_name: quartu-backend
+    container_name: insightpa-backend
     depends_on:
-      quartu-postgres:
+      postgres:
         condition: service_healthy
       qdrant:
         condition: service_started
       minio:
         condition: service_started
     environment:
-      - DATABASE_URL=postgresql://quartu_user:quartu_pass@quartu-postgres:5432/quartu_abusivismo
+      - DATABASE_URL=postgresql://insightpa_user:insightpa_pass@postgres:5432/insightpa_db
       - QDRANT_URL=http://qdrant:6333
       - MINIO_ENDPOINT=minio:9000
-      - MINIO_ACCESS_KEY=quartu_user
-      - MINIO_SECRET_KEY=quartu_pass_secure_12345
+      - MINIO_ACCESS_KEY=insightpa_user
+      - MINIO_SECRET_KEY=insightpa_pass_secure_12345
     ports:
       - "8000:8000"
     volumes:
@@ -47,25 +47,25 @@ services:
       - ./init-db:/init-db
       - ./mock_data:/mock_data
     networks:
-      - quartu-network
+      - insightpa-network
 
   qdrant:
     image: qdrant/qdrant:latest
-    container_name: quartu-qdrant
+    container_name: insightpa-qdrant
     ports:
       - "6333:6333"
       - "6334:6334"
     volumes:
       - qdrant_data:/qdrant/storage
     networks:
-      - quartu-network
+      - insightpa-network
 
   minio:
     image: minio/minio:latest
-    container_name: quartu-minio
+    container_name: insightpa-minio
     environment:
-      MINIO_ROOT_USER: quartu_user
-      MINIO_ROOT_PASSWORD: quartu_pass_secure_12345
+      MINIO_ROOT_USER: insightpa_user
+      MINIO_ROOT_PASSWORD: insightpa_pass_secure_12345
     command: server /data --console-address ":9001"
     ports:
       - "9000:9000"
@@ -73,17 +73,17 @@ services:
     volumes:
       - minio_data:/data
     networks:
-      - quartu-network
+      - insightpa-network
 
   frontend:
     build: ./frontend
-    container_name: quartu-frontend
+    container_name: insightpa-frontend
     depends_on:
       - backend
     ports:
       - "3001:80"
     networks:
-      - quartu-network
+      - insightpa-network
 
 volumes:
   postgres_data:
@@ -91,5 +91,5 @@ volumes:
   minio_data:
 
 networks:
-  quartu-network:
+  insightpa-network:
     driver: bridge

@@ -1,5 +1,5 @@
 class RiskEngine:
-    """Motore di calcolo rischio per abusivismo edilizio a Quartu Sant'Elena."""
+    """Motore di calcolo rischio per abusivismo edilizio."""
 
     def __init__(self):
         self.rules = {

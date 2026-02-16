@@ -5,7 +5,7 @@ from uuid import UUID
 class Building(BaseModel):
     id: UUID
     address: str
-    quartu_frazione: str
+    area_name: str
     risk_score: float
     status: str
 

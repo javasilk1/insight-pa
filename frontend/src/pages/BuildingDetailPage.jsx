@@ -233,7 +233,7 @@ export default function BuildingDetailPage() {
               {building.address}
             </Typography>
             <Typography color="textSecondary" variant="subtitle1" gutterBottom>
-              {building.quartu_frazione.toUpperCase()} • Distanza mare:{' '}
+              {building.area_name.toUpperCase()} • Distanza mare:{' '}
               {building.cadastral_data?.distanza_mare || 'N/A'} m
             </Typography>
           </Grid>

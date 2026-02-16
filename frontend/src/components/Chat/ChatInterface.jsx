@@ -56,7 +56,7 @@ export default function ChatInterface({ buildingId = null }) {
 
   return (
     <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', height: '100%', gap: 2 }}>
-      <Typography variant="h6">Assistente Quartu</Typography>
+      <Typography variant="h6">Assistente InsightPA</Typography>
 
       {/* Cronologia messaggi */}
       <Box sx={{ flex: 1, overflow: 'auto', mb: 2 }}>
