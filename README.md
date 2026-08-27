@@ -1,18 +1,18 @@
-# 🏛️ InsightPA - Sistema Intelligente di Analisi Edilizia
+# 🏛️ InsightPA - Intelligent Building Compliance Analysis System
 
-**InsightPA** è una piattaforma full-stack che utilizza intelligenza artificiale e machine learning per analizzare edifici, identificare abusi edilizi, valutare il rischio normativo e gestire documenti costruttivi.
+**InsightPA** is a full-stack platform that uses artificial intelligence and machine learning to analyze buildings, detect building code violations, assess regulatory risk, and manage construction-related documents.
 
-## 🎯 Scopo del Progetto
+## 🎯 Project Purpose
 
-InsightPA aiuta le autorità pubbliche, professionisti del settore edilizio e cittadini a:
+InsightPA helps public authorities, building professionals, and citizens to:
 
-- **Identificare abusi edificatori** automaticamente analizzando documenti (verbali, rilievi satellitari, planimetrie)
-- **Valutare il rischio normativo** di un edificio basato su dati catastali e conformità edilizia
-- **Interrogare documenti via chat** per ottenere risposte intelligenti su violazioni e non conformità
-- **Tracciare la storia dei rischi** nel tempo per monitorare l'evoluzione della situazione
-- **Gestire documenti** in modo centralizzato con metadata e ricerca semantica
+- **Automatically identify building violations** by analyzing documents (reports, satellite surveys, floor plans)
+- **Assess the regulatory risk** of a building based on cadastral data and building compliance
+- **Query documents via chat** to get intelligent answers about violations and non-conformities
+- **Track risk history** over time to monitor how a situation evolves
+- **Manage documents** centrally with metadata and semantic search
 
-## 🏗️ Architettura
+## 🏗️ Architecture
 
 ```
 ┌─────────────────┐
@@ -33,7 +33,7 @@ InsightPA aiuta le autorità pubbliche, professionisti del settore edilizio e ci
     ┌────┴──────────┬──────────────┬─────────────┐
     ↓               ↓              ↓             ↓
 ┌────────┐    ┌────────┐    ┌──────────┐   ┌──────────┐
-│PostSQL │    │ Qdrant │    │  MinIO   │   │LLM Model │
+│Postgres│    │ Qdrant │    │  MinIO   │   │LLM Model │
 │Database│    │ Vector │    │ Storage  │   │Embeddings│
 │        │    │  DB    │    │          │   │          │
 └────────┘    └────────┘    └──────────┘   └──────────┘
@@ -41,82 +41,82 @@ InsightPA aiuta le autorità pubbliche, professionisti del settore edilizio e ci
 
 ## 🚀 Quick Start
 
-### Prerequisiti
+### Prerequisites
 - Docker & Docker Compose
-- macOS/Linux/Windows con WSL
-- Node.js (per sviluppo frontend locale)
-- Python 3.9+ (per sviluppo backend locale)
+- macOS/Linux/Windows with WSL
+- Node.js (for local frontend development)
+- Python 3.9+ (for local backend development)
 
-### Avvio in Docker
+### Running with Docker
 
 ```bash
-# Clona il repository
+# Clone the repository
 git clone git@github.com:javasilk1/insight-pa.git
 cd insight-pa
 
-# Avvia tutti i servizi
+# Start all services
 docker-compose up -d
 
-# Verifica che tutti i container siano attivi
+# Check that all containers are running
 docker-compose ps
 ```
 
-Accedi a:
+Access:
 - **Frontend**: http://localhost:3001
 - **Backend API**: http://localhost:8000/docs
 - **MinIO Console**: http://localhost:9001
 
-## 💬 Query di Chat Intelligente
+## 💬 Intelligent Chat Queries
 
-Il chat di InsightPA comprende query naturali in italiano. Ecco alcuni esempi:
+InsightPA's chat understands natural-language queries in Italian. Some examples:
 
-### Query su Abusi Edificatori
+### Queries about Building Violations
 ```
-"Quali sono gli abusi più diffusi?"
-→ Restituisce: "Gli abusi più diffusi sono: Aumento volumetria casa (2), Casa in giardino (1)"
+"What are the most common violations?"
+→ Returns: "The most common violations are: Increased house volume (2), House in the garden (1)"
 
-"Che tipo di violazioni sono state rilevate?"
-→ Restituisce lista delle violazioni con conteggio
+"What types of violations have been detected?"
+→ Returns a list of violations with counts
 
-"Quali edifici hanno abusi?"
-→ Filtra edifici con rischio non conformità
-```
-
-### Query su Documenti
-```
-"Quali documenti abbiamo per questo edificio?"
-→ Elenca verbali, rilievi satellitari, planimetrie
-
-"Ci sono documenti contrastanti?"
-→ Indica se documentazione è in conflitto
-
-"Quali permessi sono mancanti?"
-→ Analizza completezza della documentazione
+"Which buildings have violations?"
+→ Filters buildings by non-compliance risk
 ```
 
-### Query su Rischio
+### Queries about Documents
 ```
-"Qual è il profilo di rischio?"
-→ Mostra score di rischio, level (BASSO/MEDIO/ALTO/CRITICO), fattori
+"What documents do we have for this building?"
+→ Lists reports, satellite surveys, floor plans
 
-"Come si calcola il rischio?"
-→ Spiega i criteri usati (superficie, distanza mare, permessi, etc)
+"Are there any conflicting documents?"
+→ Indicates whether the documentation is in conflict
 
-"Quali edifici hanno rischio alto?"
-→ Filtra per livello di rischio
+"Which permits are missing?"
+→ Analyzes completeness of the documentation
+```
+
+### Queries about Risk
+```
+"What is the risk profile?"
+→ Shows risk score, level (LOW/MEDIUM/HIGH/CRITICAL), factors
+
+"How is the risk calculated?"
+→ Explains the criteria used (surface area, distance from sea, permits, etc.)
+
+"Which buildings have high risk?"
+→ Filters by risk level
 ```
 
 ## 📊 API Endpoints
 
-### Edifici
+### Buildings
 ```bash
-# Ottieni lista edifici
+# Get list of buildings
 GET /api/buildings
 
-# Dettagli edificio specifico
+# Details for a specific building
 GET /api/buildings/{building_id}
 
-# Valuta rischio edificio
+# Assess building risk
 POST /api/risk
 {
   "building_id": "uuid",
@@ -127,59 +127,59 @@ POST /api/risk
 }
 ```
 
-### Chat Intelligente
+### Intelligent Chat
 ```bash
-# Poni una domanda sui documenti/violazioni
+# Ask a question about documents/violations
 POST /api/chat/query
 {
-  "question": "quali sono gli abusi più diffusi?",
-  "building_id": "uuid" (opzionale)
+  "question": "what are the most common violations?",
+  "building_id": "uuid" (optional)
 }
 
-# Risposta
+# Response
 {
-  "question": "quali sono gli abusi più diffusi?",
-  "answer": "Gli abusi più diffusi sono: Aumento volumetria casa (2)",
+  "question": "what are the most common violations?",
+  "answer": "The most common violations are: Increased house volume (2)",
   "results_count": 5,
   "sources": [...]
 }
 ```
 
-### Documenti
+### Documents
 ```bash
-# Upload documento
+# Upload a document
 POST /api/documents/upload
 multipart/form-data:
   - file: <PDF/JPEG>
   - building_id: uuid
-  - document_type: verbale|satellite|planimetria|permesso
+  - document_type: report|satellite|floorplan|permit
 
-# Lista documenti per edificio
+# List documents for a building
 GET /api/documents/building/{building_id}
 ```
 
-### Generazione Demo (Testing)
+### Demo Generation (Testing)
 ```bash
-# Genera documento mock con violazioni
+# Generate a mock document with violations
 POST /api/mock/generate-document
 Params:
   - building_id: uuid
-  - document_type: verbale|satellite|planimetria
-  - scenario: violazione_grave|violazione_leggera|conforme
+  - document_type: report|satellite|floorplan
+  - scenario: severe_violation|minor_violation|compliant
 ```
 
-## 🗂️ Struttura del Progetto
+## 🗂️ Project Structure
 
 ```
 insight-pa/
 ├── backend/                          # FastAPI Backend
 │   ├── app/
 │   │   ├── api/                     # API Endpoints
-│   │   │   ├── buildings.py        # Gestione edifici
-│   │   │   ├── chat.py             # Chat intelligente
-│   │   │   ├── documents.py        # Gestione documenti
-│   │   │   ├── risk.py             # Calcolo rischio
-│   │   │   └── mock_generator.py   # Generazione demo
+│   │   │   ├── buildings.py        # Building management
+│   │   │   ├── chat.py             # Intelligent chat
+│   │   │   ├── documents.py        # Document management
+│   │   │   ├── risk.py             # Risk calculation
+│   │   │   └── mock_generator.py   # Demo generation
 │   │   ├── services/               # Business Logic
 │   │   │   ├── llm_service.py      # LLM integration
 │   │   │   ├── embedding_service.py # Embeddings
@@ -195,9 +195,9 @@ insight-pa/
 ├── frontend/                         # React Frontend
 │   ├── src/
 │   │   ├── pages/
-│   │   │   ├── Dashboard.jsx       # Pagina principale
-│   │   │   ├── BuildingDetailPage.jsx # Dettagli edificio
-│   │   │   └── MapView.jsx         # Mappa
+│   │   │   ├── Dashboard.jsx       # Main page
+│   │   │   ├── BuildingDetailPage.jsx # Building details
+│   │   │   └── MapView.jsx         # Map
 │   │   ├── components/
 │   │   │   ├── Chat/               # Chat interface
 │   │   │   └── Documents/          # Document management
@@ -211,13 +211,13 @@ insight-pa/
 │   ├── 01_init.sql                # Schema
 │   └── 02_insert_buildings.sql    # Demo data (auto-generated)
 │
-├── docker-compose.yml               # Orchestrazione servizi
-└── README.md                        # Questo file
+├── docker-compose.yml               # Service orchestration
+└── README.md                        # This file
 ```
 
-## 🔧 Configurazione
+## 🔧 Configuration
 
-### Variabili di Ambiente (.env)
+### Environment Variables (.env)
 ```env
 # Backend
 DATABASE_URL=postgresql://user:password@postgres:5432/insightpa
@@ -225,40 +225,40 @@ QDRANT_HOST=qdrant
 QDRANT_PORT=6333
 MINIO_ROOT_USER=minioadmin
 MINIO_ROOT_PASSWORD=minioadmin
-LLM_API_KEY=your_llm_key  # Se usando API esterna
+LLM_API_KEY=your_llm_key  # If using an external API
 
 # Frontend
 VITE_API_URL=http://localhost:8000
 ```
 
-## 📈 Metriche di Rischio
+## 📈 Risk Metrics
 
-Il sistema calcola il rischio in base a:
+The system calculates risk based on:
 
-| Fattore | Peso | Descrizione |
-|---------|------|-------------|
-| **Superficie catastale** | Alto | Delta tra autorizzato e reale |
-| **Distanza mare** | Medio | Vincoli Zone E (< 300m) |
-| **Permessi edili** | Alto | Presenza/assenza documentazione |
-| **Piscina/Annessi** | Medio | Strutture non autorizzate |
-| **Variazioni satellitari** | Medio | Modifiche rilevate da satellite |
-| **Documenti contrastanti** | Alto | Incoerenze documentazione |
+| Factor | Weight | Description |
+|--------|--------|-------------|
+| **Cadastral surface area** | High | Delta between authorized and actual |
+| **Distance from the sea** | Medium | Zone E restrictions (< 300m) |
+| **Building permits** | High | Presence/absence of documentation |
+| **Pool/Outbuildings** | Medium | Unauthorized structures |
+| **Satellite-detected changes** | Medium | Modifications detected via satellite |
+| **Conflicting documents** | High | Documentation inconsistencies |
 
 **Risk Score**: 0-100
-- 0-25: BASSO (🟢)
-- 25-50: MEDIO (🟡)
-- 50-75: ALTO (🔴)
-- 75-100: CRITICO (⚫)
+- 0-25: LOW (🟢)
+- 25-50: MEDIUM (🟡)
+- 50-75: HIGH (🔴)
+- 75-100: CRITICAL (⚫)
 
 ## 🧪 Testing
 
-### Test API con Postman
+### API Testing with Postman
 ```bash
-# Importa collection da test-postman/
-# Esegui requests passo per passo
+# Import the collection from test-postman/
+# Run requests step by step
 ```
 
-### Test Locali
+### Local Tests
 ```bash
 # Backend
 cd backend
@@ -279,43 +279,43 @@ docker-compose build
 # Deploy
 docker-compose up -d
 
-# Verifica salute servizi
+# Check service health
 docker-compose ps
 docker-compose logs backend --tail=50
 ```
 
 ### Scale-up
 ```bash
-# Scala backend
+# Scale the backend
 docker-compose up -d --scale backend=3
 ```
 
-## 📝 Note Importanti
+## 📝 Important Notes
 
-- **Embeddings**: Utilizza `sentence-transformers/all-MiniLM-L6-v2` (384 dimensioni)
-- **Vector DB**: Qdrant per ricerca semantica documenti
-- **Storage**: MinIO per file PDF/immagini
-- **Database**: PostgreSQL con support JSONB per dati catastali
-- **Chat**: Fallback intelligente da Qdrant a violations table
+- **Embeddings**: Uses `sentence-transformers/all-MiniLM-L6-v2` (384 dimensions)
+- **Vector DB**: Qdrant for semantic document search
+- **Storage**: MinIO for PDF/image files
+- **Database**: PostgreSQL with JSONB support for cadastral data
+- **Chat**: Smart fallback from Qdrant to the violations table
 
-## 🤝 Contribuire
+## 🤝 Contributing
 
-Per contribuire:
-1. Fai un fork del repository
-2. Crea un branch feature (`git checkout -b feature/nome`)
-3. Commit changes (`git commit -m 'Add feature'`)
-4. Push al branch (`git push origin feature/nome`)
-5. Apri una Pull Request
+To contribute:
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/name`)
+3. Commit your changes (`git commit -m 'Add feature'`)
+4. Push to the branch (`git push origin feature/name`)
+5. Open a Pull Request
 
-## 📄 Licenza
+## 📄 License
 
-MIT License - vedi file LICENSE
+MIT License - see LICENSE file
 
-## 👤 Contatti
+## 👤 Contacts
 
 - **Repository**: https://github.com/javasilk1/insight-pa
-- **Issues**: Apri una issue per bug e feature requests
+- **Issues**: Open an issue for bugs and feature requests
 
 ---
 
-**Sviluppato con ❤️ per la trasparenza edilizia e la legalità**
+**Built with ❤️ for building transparency and legal compliance**
