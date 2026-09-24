@@ -181,7 +181,6 @@ insight-pa/
 │   │   │   ├── risk.py             # Risk calculation
 │   │   │   └── mock_generator.py   # Demo generation
 │   │   ├── services/               # Business Logic
-│   │   │   ├── llm_service.py      # LLM integration
 │   │   │   ├── embedding_service.py # Embeddings
 │   │   │   ├── qdrant_service.py   # Vector search
 │   │   │   ├── minio_service.py    # Storage
