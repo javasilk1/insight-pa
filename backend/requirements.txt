@@ -16,3 +16,4 @@ huggingface-hub
 faker
 reportlab
 qrcode
+python-docx

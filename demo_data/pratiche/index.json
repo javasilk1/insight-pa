@@ -1,0 +1,32 @@
+[
+  {
+    "id": "P-001",
+    "scenario": "Conforme: scostamento di superficie entro la tolleranza del Salva Casa.",
+    "esito_atteso": "conforme",
+    "difformita": 0
+  },
+  {
+    "id": "P-002",
+    "scenario": "Veranda: balcone chiuso senza titolo, planimetria catastale non aggiornata.",
+    "esito_atteso": "non_conforme",
+    "difformita": 2
+  },
+  {
+    "id": "P-003",
+    "scenario": "Sottotetto non abitabile trasformato in camera e bagno; catasto aggiornato senza titolo.",
+    "esito_atteso": "non_conforme",
+    "difformita": 2
+  },
+  {
+    "id": "P-004",
+    "scenario": "Edilizio conforme grazie a una CILA; planimetria catastale mai aggiornata.",
+    "esito_atteso": "conforme_edilizio_non_conforme_catastale",
+    "difformita": 1
+  },
+  {
+    "id": "P-005",
+    "scenario": "Villa entro 300 m dalla costa: ampliamento e piscina senza titolo in area vincolata.",
+    "esito_atteso": "non_conforme",
+    "difformita": 3
+  }
+]
