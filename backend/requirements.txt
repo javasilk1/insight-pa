@@ -17,3 +17,7 @@ faker
 reportlab
 qrcode
 python-docx
+anthropic>=1.8
+httpx
+pytesseract
+pdf2image

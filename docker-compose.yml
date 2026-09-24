@@ -39,6 +39,8 @@ services:
       - MINIO_ENDPOINT=minio:9000
       - MINIO_ACCESS_KEY=insightpa_user
       - MINIO_SECRET_KEY=insightpa_pass_secure_12345
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OLLAMA_URL=http://ollama:11434
     ports:
       - "8000:8000"
     volumes:
@@ -76,6 +78,18 @@ services:
     networks:
       - insightpa-network
 
+  # Modello locale per l'estrazione: parte solo con `docker-compose --profile locale up`
+  ollama:
+    image: ollama/ollama:latest
+    container_name: insightpa-ollama
+    profiles: ["locale"]
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - insightpa-network
+
   frontend:
     build: ./frontend
     container_name: insightpa-frontend
@@ -90,6 +104,7 @@ volumes:
   postgres_data:
   qdrant_data:
   minio_data:
+  ollama_data:
 
 networks:
   insightpa-network:
