@@ -64,7 +64,9 @@ services:
       - insightpa-network
 
   minio:
-    image: minio/minio:latest
+    # minio/minio non è più pubblicata su Docker Hub
+    image: chainguard/minio:latest
+    user: "0:0"  # l'immagine gira come non-root e non può scrivere nel volume creato da Docker
     container_name: insightpa-minio
     environment:
       MINIO_ROOT_USER: insightpa_user
