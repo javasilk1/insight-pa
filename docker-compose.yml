@@ -46,6 +46,7 @@ services:
       - ./backend/scripts:/app/scripts
       - ./init-db:/init-db
       - ./mock_data:/mock_data
+      - ./demo_data:/demo_data:ro
     networks:
       - insightpa-network
 

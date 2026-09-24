@@ -9,7 +9,7 @@ Comune, persone, codici fiscali, protocolli e immobili sono inventati. Ogni pagi
 
 | Pratica | Scenario | Esito atteso | Difformità |
 |---|---|---|---|
-| P-001 | Appartamento con superficie +2,3% rispetto al progetto | conforme (tolleranza Salva Casa) | 0 |
+| P-001 | Appartamento con superficie +2,4% rispetto al progetto | conforme (tolleranza Salva Casa) | 0 |
 | P-002 | Balcone chiuso a veranda senza titolo | non conforme | 1 edilizia, 1 catastale |
 | P-003 | Sottotetto non abitabile trasformato in camera e bagno, catasto aggiornato senza titolo | non conforme | 1 edilizia, 1 catastale |
 | P-004 | Tramezzo demolito con CILA regolare, planimetria catastale vecchia | conforme edilizio, non conforme catastale | 1 catastale |
@@ -24,6 +24,10 @@ P-001 e P-004 servono a controllare che l'agente **non** inventi difformità.
 - Visura catastale
 - Planimetria catastale
 - Rilievo dello stato di fatto del tecnico
+
+## Vederle nell'app
+
+Con `docker-compose up` la cartella è montata nel backend: la sezione **Pratiche** del frontend (http://localhost:3001/pratiche) mostra le pratiche, i PDF, le difformità da confermare o scartare e l'export della relazione in Word. Il formato dei dati è definito in `backend/app/models/pratica.py`: oggi lo riempiono i `ground_truth.json`, domani lo produrrà l'agente.
 
 ## Rigenerare
 

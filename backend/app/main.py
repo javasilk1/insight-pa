@@ -6,6 +6,7 @@ from api import chat
 from api import documents
 from api import mock_generator
 from api import risk_history
+from api import pratiche
 from core.config import settings
 import asyncpg
 import os
@@ -42,5 +43,6 @@ app.include_router(chat.router)
 app.include_router(documents.router)
 app.include_router(mock_generator.router)
 app.include_router(risk_history.router)
+app.include_router(pratiche.router)
 app.include_router(documents.router)
 app.include_router(mock_generator.router)
