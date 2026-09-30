@@ -1,0 +1,81 @@
+{
+  "id": "P-002",
+  "scenario": "Veranda: balcone chiuso senza titolo, planimetria catastale non aggiornata.",
+  "dati_fittizi": true,
+  "immobile": {
+    "indirizzo": "Viale del Faro 112, int. 9",
+    "piano": "3",
+    "intestatario": "Paolo Esempio",
+    "cf": "SMPPLA62C12Z999K",
+    "foglio": "7",
+    "particella": "301",
+    "sub": "14"
+  },
+  "documenti": [
+    "01_licenza_edilizia.pdf",
+    "02_visura_catastale.pdf",
+    "03_planimetria_catastale.pdf",
+    "04_rilievo_stato_di_fatto.pdf"
+  ],
+  "esito_atteso": "non_conforme",
+  "sintesi": "Balcone chiuso a veranda senza titolo: aumento di superficie utile e volume. La planimetria catastale non rappresenta lo stato di fatto.",
+  "difformita_attese": [
+    {
+      "id": "D1",
+      "ambito": "edilizio",
+      "tipo": "chiusura_balcone_veranda",
+      "gravita": "media",
+      "entita": "+8,00 m² di superficie utile, circa 22,00 m³",
+      "descrizione": "Il balcone approvato come superficie non residenziale è chiuso con infissi fissi e usato come locale abitabile, senza alcun titolo edilizio.",
+      "valutazione": "Non rientra in tolleranza né nell'edilizia libera: la chiusura non è una vetrata panoramica amovibile e trasparente. Da valutare la sanatoria.",
+      "riferimento_normativo": "art. 6 c.1 lett. b-bis e art. 36-bis DPR 380/2001",
+      "fonti": [
+        {
+          "file": "01_licenza_edilizia.pdf",
+          "pagina": 2
+        },
+        {
+          "file": "04_rilievo_stato_di_fatto.pdf",
+          "pagina": 1
+        }
+      ]
+    },
+    {
+      "id": "D2",
+      "ambito": "catastale",
+      "tipo": "planimetria_non_aggiornata",
+      "gravita": "media",
+      "descrizione": "La planimetria catastale del 1981 riporta il balcone aperto, non la veranda.",
+      "valutazione": "Dopo l'eventuale sanatoria serve una variazione DOCFA prima dell'atto di vendita.",
+      "riferimento_normativo": "art. 29 c.1-bis L. 52/1985",
+      "fonti": [
+        {
+          "file": "03_planimetria_catastale.pdf",
+          "pagina": 1
+        },
+        {
+          "file": "04_rilievo_stato_di_fatto.pdf",
+          "pagina": 1
+        }
+      ]
+    }
+  ],
+  "dati_estratti_attesi": {
+    "01_licenza_edilizia.pdf": {
+      "tipo": "licenza edilizia",
+      "numero": "212/1979",
+      "data": "1979-10-03",
+      "sup_utile_m2": 80.0,
+      "sup_non_residenziale_m2": 8.0
+    },
+    "02_visura_catastale.pdf": {
+      "categoria": "A/2",
+      "classe": "2",
+      "consistenza_vani": 5.5,
+      "sup_catastale_m2": 88
+    },
+    "04_rilievo_stato_di_fatto.pdf": {
+      "sup_utile_m2": 88.0
+    }
+  }
+}

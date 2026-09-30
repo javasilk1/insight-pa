@@ -1,0 +1,59 @@
+{
+  "id": "P-001",
+  "scenario": "Conforme: scostamento di superficie entro la tolleranza del Salva Casa.",
+  "dati_fittizi": true,
+  "immobile": {
+    "indirizzo": "Via dei Gerani 14, int. 5",
+    "piano": "2",
+    "intestatario": "Laura Demo",
+    "cf": "DMELRA70A41Z999X",
+    "foglio": "12",
+    "particella": "845",
+    "sub": "9"
+  },
+  "documenti": [
+    "01_concessione_edilizia.pdf",
+    "02_visura_catastale.pdf",
+    "03_planimetria_catastale.pdf",
+    "04_rilievo_stato_di_fatto.pdf"
+  ],
+  "esito_atteso": "conforme",
+  "sintesi": "Stato di fatto conforme al titolo. Lo scostamento di superficie rientra nella tolleranza costruttiva.",
+  "difformita_attese": [],
+  "verifiche_attese": [
+    {
+      "tipo": "tolleranza_costruttiva",
+      "descrizione": "Superficie utile rilevata 81,95 m² contro 80,00 m² di progetto: +1,95 m² (+2,44%).",
+      "valutazione": "Entro la tolleranza del 5% prevista per unità tra 60 e 100 m² per interventi realizzati entro il 24/05/2024. Con la sola soglia del 2% sarebbe stata una difformità.",
+      "riferimento_normativo": "art. 34-bis DPR 380/2001 come modificato dal DL 69/2024 (Salva Casa)",
+      "fonti": [
+        {
+          "file": "01_concessione_edilizia.pdf",
+          "pagina": 2
+        },
+        {
+          "file": "04_rilievo_stato_di_fatto.pdf",
+          "pagina": 1
+        }
+      ]
+    }
+  ],
+  "dati_estratti_attesi": {
+    "01_concessione_edilizia.pdf": {
+      "tipo": "concessione edilizia",
+      "numero": "87/1987",
+      "data": "1987-05-14",
+      "sup_utile_m2": 80.0,
+      "destinazione": "residenziale"
+    },
+    "02_visura_catastale.pdf": {
+      "categoria": "A/2",
+      "classe": "3",
+      "consistenza_vani": 5,
+      "sup_catastale_m2": 86
+    },
+    "04_rilievo_stato_di_fatto.pdf": {
+      "sup_utile_m2": 81.95
+    }
+  }
+}

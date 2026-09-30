@@ -1,0 +1,68 @@
+{
+  "id": "P-004",
+  "scenario": "Edilizio conforme grazie a una CILA; planimetria catastale mai aggiornata.",
+  "dati_fittizi": true,
+  "immobile": {
+    "indirizzo": "Via Roma 45, int. 3",
+    "piano": "1",
+    "intestatario": "Marco Campione",
+    "cf": "CMPMRC75D10Z999W",
+    "foglio": "9",
+    "particella": "512",
+    "sub": "6"
+  },
+  "documenti": [
+    "01_concessione_edilizia.pdf",
+    "02_cila_2019.pdf",
+    "03_visura_catastale.pdf",
+    "04_planimetria_catastale.pdf",
+    "05_rilievo_stato_di_fatto.pdf"
+  ],
+  "esito_atteso": "conforme_edilizio_non_conforme_catastale",
+  "sintesi": "Lo stato di fatto è legittimato dalla CILA 2019. La planimetria catastale del 1986 mostra ancora cucina e soggiorno separati: serve una variazione DOCFA prima del rogito.",
+  "difformita_attese": [
+    {
+      "id": "D1",
+      "ambito": "catastale",
+      "tipo": "planimetria_non_aggiornata",
+      "gravita": "bassa",
+      "descrizione": "La planimetria catastale non riporta la demolizione del tramezzo eseguita con CILA 2019.",
+      "valutazione": "Regolarizzabile con DOCFA; necessaria per la conformità catastale in atto.",
+      "riferimento_normativo": "art. 29 c.1-bis L. 52/1985",
+      "fonti": [
+        {
+          "file": "02_cila_2019.pdf",
+          "pagina": 1
+        },
+        {
+          "file": "04_planimetria_catastale.pdf",
+          "pagina": 1
+        },
+        {
+          "file": "05_rilievo_stato_di_fatto.pdf",
+          "pagina": 1
+        }
+      ]
+    }
+  ],
+  "dati_estratti_attesi": {
+    "01_concessione_edilizia.pdf": {
+      "tipo": "concessione edilizia",
+      "numero": "130/1985",
+      "data": "1985-07-19",
+      "sup_utile_m2": 80.0
+    },
+    "02_cila_2019.pdf": {
+      "tipo": "CILA",
+      "protocollo": "15872",
+      "data": "2019-05-06",
+      "oggetto": "demolizione tramezzo cucina-soggiorno e rifacimento bagno"
+    },
+    "03_visura_catastale.pdf": {
+      "categoria": "A/2",
+      "classe": "3",
+      "consistenza_vani": 5,
+      "sup_catastale_m2": 86
+    }
+  }
+}
