@@ -29,6 +29,18 @@ P-001 e P-004 servono a controllare che l'agente **non** inventi difformità.
 
 Con `docker-compose up` la cartella è montata nel backend: la sezione **Pratiche** del frontend (http://localhost:3001/pratiche) mostra le pratiche, i PDF, le difformità da confermare o scartare e l'export della relazione in Word. Il formato dei dati è definito in `backend/app/models/pratica.py`: oggi lo riempiono i `ground_truth.json`, domani lo produrrà l'agente.
 
+## Valutare l'estrazione
+
+`demo_data/pratiche_scansionate` contiene gli stessi documenti come scansioni senza testo selezionabile (rigenerabili con `backend/scripts/genera_scansioni.py`).
+
+```bash
+python backend/scripts/valuta_estrazione.py regole                                        # baseline
+ANTHROPIC_API_KEY=... python backend/scripts/valuta_estrazione.py claude
+python backend/scripts/valuta_estrazione.py ollama --cartella demo_data/pratiche_scansionate  # con Ollama avviato
+```
+
+Il confronto e la scelta sono documentati in `docs/adr/0001-estrazione-documenti.md`.
+
 ## Rigenerare
 
 ```bash
