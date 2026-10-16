@@ -64,3 +64,30 @@ def test_relazione_include_solo_le_difformita_confermate():
     assert "D2 - " not in text
     assert "Nota del tecnico: Verificato in sopralluogo" in text
     assert "Geom. Demo" in text
+
+
+def test_estrattori_elenca_le_tre_opzioni():
+    nomi = {e["nome"]: e for e in client.get("/api/pratiche/estrattori").json()}
+    assert set(nomi) == {"claude", "ollama", "regole"}
+    assert nomi["regole"]["disponibile"] is True
+
+
+def test_estrazione_con_regole_confronta_con_i_valori_attesi():
+    assert client.get("/api/pratiche/P-002/estrazione").status_code in (200, 404)
+    res = client.post("/api/pratiche/P-002/estrazione", json={"estrattore": "regole"})
+    assert res.status_code == 202
+    # TestClient esegue il task in background prima di restituire la risposta
+    stato = client.get("/api/pratiche/P-002/estrazione").json()
+    assert stato["stato"] == "completata"
+    assert stato["completati"] == stato["totali"] == 4
+    docs = {d["file"]: d for d in stato["documenti"]}
+    assert docs["02_visura_catastale.pdf"]["dati"]["categoria"] == "A/2"
+    assert stato["campi_totali"] > 0 and stato["campi_corretti"] == stato["campi_totali"]
+
+
+def test_estrazione_rifiuta_estrattore_non_disponibile(monkeypatch):
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    res = client.post("/api/pratiche/P-001/estrazione", json={"estrattore": "claude"})
+    assert res.status_code == 400
+    assert "ANTHROPIC_API_KEY" in res.json()["detail"]
+    assert client.post("/api/pratiche/P-999/estrazione", json={"estrattore": "regole"}).status_code == 404

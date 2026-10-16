@@ -49,6 +49,13 @@ frontend/src/             pagine Pratiche e Dettaglio pratica
 - `GET /api/pratiche/{id}`: analisi di una pratica (documenti, dati estratti, difformità)
 - `GET /api/pratiche/{id}/documenti/{file}`: il PDF originale
 - `POST /api/pratiche/{id}/relazione`: genera la relazione Word con le difformità confermate
+- `GET /api/pratiche/estrattori`: quali estrattori sono disponibili (Claude, Ollama, regole)
+- `POST /api/pratiche/{id}/estrazione`: avvia l'estrazione dei dati dai PDF con l'estrattore scelto
+- `GET /api/pratiche/{id}/estrazione`: avanzamento e risultati, confrontati con i valori attesi
+
+## Dove si usa l'LLM
+
+Nella pagina di una pratica, il riquadro **Estrazione con l'AI** fa leggere i PDF a Claude o a Ollama e mostra, campo per campo, cosa ha estratto il modello rispetto ai valori attesi. Le difformità sono ancora precompilate: le produrrà l'agente di confronto, il prossimo passo.
 
 ## Valutare l'estrazione
 

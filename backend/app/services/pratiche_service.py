@@ -75,6 +75,14 @@ class PraticheService:
             difformita=gt["difformita_attese"], verifiche=gt.get("verifiche_attese", []),
         )
 
+    def da_estrarre(self, pratica_id: str) -> tuple[Path, list[str], dict[str, dict]] | None:
+        """Cartella, PDF della pratica e valori attesi per documento (per confrontare l'estrazione)."""
+        folder = self._folder(pratica_id)
+        if not folder:
+            return None
+        gt = self._gt(folder)
+        return folder, gt["documenti"], gt.get("dati_estratti_attesi", {})
+
     def documento(self, pratica_id: str, file: str) -> Path | None:
         folder = self._folder(pratica_id)
         if not folder or not FILE_RE.match(file):

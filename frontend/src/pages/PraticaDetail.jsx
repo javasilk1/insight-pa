@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import {
-  Accordion, AccordionDetails, AccordionSummary, Alert, Box, Button, Card, CardContent, Chip, CircularProgress,
+  Alert, Box, Button, Card, CardContent, Chip, CircularProgress,
   Divider, Grid, Link, Paper, Stack, Tab, Tabs, TextField, ToggleButton, ToggleButtonGroup, Typography,
 } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DescriptionIcon from '@mui/icons-material/Description';
+import EstrazionePanel from '../components/EstrazionePanel';
 import { ESITI, GRAVITA, downloadRelazione, getPratica } from '../services/pratiche';
 
 // La revisione del tecnico resta nel browser finché non esiste un backend multi-utente.
@@ -137,7 +137,7 @@ export default function PraticaDetail() {
       </Typography>
       {pratica.origine === 'demo_ground_truth' && (
         <Alert severity="info" sx={{ mb: 2 }}>
-          Pratica dimostrativa con dati fittizi: i risultati sono precompilati e mostrano cosa produrrà l'analisi automatica.
+          Pratica dimostrativa con dati fittizi: le difformità sono precompilate e mostrano cosa produrrà l'analisi automatica. I dati dei documenti puoi estrarli davvero con l'AI.
         </Alert>
       )}
 
@@ -179,26 +179,7 @@ export default function PraticaDetail() {
               />
             ))}
 
-            <Accordion variant="outlined" disableGutters>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="subtitle1">Dati estratti dai documenti</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Stack spacing={1.5}>
-                  {Object.entries(pratica.dati_estratti).map(([file, campi]) => (
-                    <Box key={file}>
-                      <Link component="button" variant="subtitle2" onClick={() => openDoc(file)}>{file}</Link>
-                      {Object.entries(campi).map(([k, v]) => (
-                        <Typography variant="body2" key={k}>
-                          <Box component="span" color="text.secondary">{label(k)}:</Box>{' '}
-                          {Array.isArray(v) ? v.join(', ') : typeof v === 'boolean' ? (v ? 'sì' : 'no') : String(v)}
-                        </Typography>
-                      ))}
-                    </Box>
-                  ))}
-                </Stack>
-              </AccordionDetails>
-            </Accordion>
+            <EstrazionePanel praticaId={id} onOpen={openDoc} />
 
             <Paper variant="outlined" sx={{ p: 2 }}>
               <Typography variant="subtitle1" sx={{ mb: 1 }}>Relazione</Typography>

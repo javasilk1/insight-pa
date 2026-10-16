@@ -67,3 +67,7 @@ class RichiestaRelazione(BaseModel):
     confermate: list[str]
     note: dict[str, str] = {}
     tecnico: str = ""
+
+
+class RichiestaEstrazione(BaseModel):
+    estrattore: Literal["claude", "ollama", "regole"] = "claude"
