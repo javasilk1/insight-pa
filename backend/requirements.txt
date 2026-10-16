@@ -11,9 +11,7 @@ minio
 pypdf2
 pillow
 huggingface-hub
-faker
 reportlab
-qrcode
 python-docx
 anthropic>=1.8
 httpx
