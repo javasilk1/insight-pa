@@ -27,3 +27,17 @@ export const downloadRelazione = async (id, { confermate, note, tecnico }) => {
   link.remove();
   window.URL.revokeObjectURL(url);
 };
+
+export const getEstrattori = async () => (await api.get('/pratiche/estrattori')).data;
+
+export const getEstrazione = async (id) => {
+  try {
+    return (await api.get(`/pratiche/${id}/estrazione`)).data;
+  } catch (e) {
+    if (e.response?.status === 404) return null;
+    throw e;
+  }
+};
+
+export const avviaEstrazione = async (id, estrattore) =>
+  (await api.post(`/pratiche/${id}/estrazione`, { estrattore })).data;
