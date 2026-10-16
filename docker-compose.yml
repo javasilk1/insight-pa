@@ -41,6 +41,10 @@ services:
       - MINIO_SECRET_KEY=insightpa_pass_secure_12345
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
       - OLLAMA_URL=http://ollama:11434
+      # Tracing dell'agente su LangSmith (facoltativo): LANGSMITH_TRACING=true e la chiave nel .env
+      - LANGSMITH_TRACING=${LANGSMITH_TRACING:-false}
+      - LANGSMITH_API_KEY=${LANGSMITH_API_KEY:-}
+      - LANGSMITH_PROJECT=insightpa
     ports:
       - "8000:8000"
     volumes:
@@ -48,6 +52,7 @@ services:
       - ./backend/scripts:/app/scripts
       - ./init-db:/init-db
       - ./demo_data:/demo_data:ro
+      - ./docs:/docs  # eval_completo.py scrive qui docs/eval/risultati.md
     networks:
       - insightpa-network
 

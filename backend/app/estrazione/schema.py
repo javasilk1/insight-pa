@@ -11,6 +11,12 @@ from pydantic import BaseModel, Field
 TipoDocumento = Literal["titolo_edilizio", "visura", "planimetria", "rilievo", "altro"]
 
 
+class Locale(BaseModel):
+    nome: str
+    destinazione: Optional[str] = Field(None, description="residenziale, non residenziale, accessorio, pertinenza, collegamento")
+    superficie_m2: Optional[float] = None
+
+
 class TitoloEdilizio(BaseModel):
     tipo: Optional[str] = Field(None, description="Tipo di titolo in minuscolo: licenza edilizia, concessione edilizia, permesso di costruire, CILA, SCIA, condono")
     numero: Optional[str] = Field(None, description="Numero del titolo nel formato del documento, es. 45/2001")
@@ -25,6 +31,8 @@ class TitoloEdilizio(BaseModel):
     altezza_media_m: Optional[float] = Field(None, description="Altezza media interna in metri, se indicata")
     vincolo_paesaggistico: Optional[bool] = Field(None, description="True se il titolo cita un vincolo paesaggistico o la fascia costiera")
     prescrizioni: list[str] = Field(default_factory=list, description="Prescrizioni e condizioni del titolo, una per voce")
+    locali: list[Locale] = Field(default_factory=list, description="Locali dell'elaborato grafico approvato, con destinazione e superficie")
+    pagina_elaborato: Optional[int] = Field(None, description="Numero di pagina del PDF con la tabella dei locali dell'elaborato grafico")
 
 
 class Visura(BaseModel):
@@ -35,10 +43,10 @@ class Visura(BaseModel):
     rendita_euro: Optional[float] = Field(None, description="Rendita catastale in euro")
 
 
-class Locale(BaseModel):
-    nome: str
-    destinazione: Optional[str] = Field(None, description="residenziale, non residenziale, accessorio, pertinenza, collegamento")
-    superficie_m2: Optional[float] = None
+class Planimetria(BaseModel):
+    data_dichiarazione: Optional[str] = Field(None, description="Data della dichiarazione catastale, formato YYYY-MM-DD")
+    protocollo: Optional[str] = Field(None, description="Numero di protocollo della dichiarazione, solo cifre")
+    locali: list[Locale] = Field(default_factory=list, description="Locali disegnati nella planimetria, con superficie se indicata")
 
 
 class Rilievo(BaseModel):
@@ -59,7 +67,9 @@ class Classificazione(BaseModel):
     tipo: TipoDocumento
 
 
-SCHEMI: dict[str, type[BaseModel]] = {"titolo_edilizio": TitoloEdilizio, "visura": Visura, "rilievo": Rilievo}
+SCHEMI: dict[str, type[BaseModel]] = {
+    "titolo_edilizio": TitoloEdilizio, "visura": Visura, "planimetria": Planimetria, "rilievo": Rilievo,
+}
 
 
 def classifica(testo: str) -> TipoDocumento:

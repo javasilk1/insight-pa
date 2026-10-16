@@ -24,6 +24,7 @@ class Difformita(BaseModel):
     riferimento_normativo: str
     entita: Optional[str] = None
     fonti: list[Fonte]
+    fonti_normative: list[dict] = []  # passaggi normativi citati dall'agente (id, citazione, testo)
 
 
 class Verifica(BaseModel):
@@ -61,13 +62,20 @@ class AnalisiPratica(BaseModel):
     dati_estratti: dict[str, dict]
     difformita: list[Difformita]
     verifiche: list[Verifica]
+    agente: Optional[dict] = None  # con origine "agente": estrattore, redattore, passi del grafo, note
 
 
 class RichiestaRelazione(BaseModel):
     confermate: list[str]
+    origine: Literal["demo_ground_truth", "agente"] = "demo_ground_truth"
     note: dict[str, str] = {}
     tecnico: str = ""
 
 
 class RichiestaEstrazione(BaseModel):
     estrattore: Literal["claude", "ollama", "regole"] = "claude"
+
+
+class RichiestaAgente(BaseModel):
+    estrattore: Literal["claude", "ollama", "regole"] = "claude"
+    redattore: Literal["claude", "ollama", "testo"] = "claude"

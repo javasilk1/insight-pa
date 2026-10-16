@@ -16,7 +16,7 @@ from pathlib import Path
 from pydantic import BaseModel
 
 from .pdf_testo import estrai_pagine, testo_completo
-from .schema import SCHEMI, Classificazione, Rilievo, Locale, classifica, come_dict
+from .schema import SCHEMI, Classificazione, Locale, Planimetria, Rilievo, classifica, come_dict
 
 ISTRUZIONI = (
     "Sei l'assistente di un tecnico edilizio italiano che verifica lo stato legittimo di un immobile. "
@@ -78,6 +78,14 @@ def _cerca(pattern: str, testo: str, flags=re.I) -> str | None:
     return m.group(1).strip() if m else None
 
 
+RIGA_LOCALE = r"^ ?([A-Z][\w -]+)\n([a-z ()]+)\n[\d,]+ x [\d,]+\n([\d,]+)$"
+
+
+def _locali(testo: str) -> list[Locale]:
+    return [Locale(nome=n.strip(), destinazione=d.strip(), superficie_m2=_num(s))
+            for n, d, s in re.findall(RIGA_LOCALE, testo, re.M)]
+
+
 class RegoleEstrattore(Estrattore):
     """Funziona solo sul formato delle pratiche demo: serve da riferimento minimo e da test del harness."""
     nome = "regole"
@@ -104,17 +112,28 @@ class RegoleEstrattore(Estrattore):
                 vincolo_paesaggistico=bool(re.search(r"paesaggistic|battigia|fascia costiera", t, re.I)) or None,
                 prescrizioni=[l[2:] for l in t.splitlines() if l.startswith("- ")],
             )
+            # La tabella dei locali è nell'elaborato grafico (pagina 2) o, per le CILA, nella stessa pagina
+            for p in pagine:
+                if locali := _locali(p["testo"]):
+                    dati.locali, dati.pagina_elaborato = locali, p["pagina"]
+                    break
         elif tipo == "visura":
             m = re.search(r"\n([A-F]/\d+)\n(\w+)\n([\d,]+) vani\n(\d+) m²\nEuro ([\d.,]+)", t)
             dati = schema(categoria=m.group(1), classe=m.group(2), consistenza_vani=_num(m.group(3)),
                           sup_catastale_m2=_num(m.group(4)), rendita_euro=_num(m.group(5))) if m else schema()
+        elif tipo == "planimetria":
+            m = re.search(r"protocollo n\. (\d+) del (\d{2}/\d{2}/\d{4})", t)
+            etichette = re.findall(r"^([A-Z][A-Z0-9 -]+)\n([\d,]+) m²$", t, re.M)
+            dati = Planimetria(
+                protocollo=m.group(1) if m else None, data_dichiarazione=_iso(m.group(2)) if m else None,
+                locali=[Locale(nome=n.strip().capitalize(), superficie_m2=_num(s)) for n, s in etichette],
+            )
         else:  # rilievo
-            righe = re.findall(r"^ ?([A-Z][\w -]+)\n([a-z ()]+)\n[\d,]+ x [\d,]+\n([\d,]+)$", t, re.M)
             dati = Rilievo(
                 data_sopralluogo=_iso(_cerca(r"Sopralluogo del (\d{2}/\d{2}/\d{4})", t)),
                 sup_utile_m2=_num(_cerca(r"Superficie utile totale[^:]*:\s*([\d.,]+) m²", t)),
                 distanza_mare_m=_num(_cerca(r"battigia[^:]*: circa (\d+) m", t)),
-                locali=[Locale(nome=n.strip(), destinazione=d.strip(), superficie_m2=_num(s)) for n, d, s in righe],
+                locali=_locali(t),
             )
         return dati, {}, []
 

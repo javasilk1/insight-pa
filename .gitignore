@@ -38,3 +38,6 @@ backend/app/vector_store/
 
 # Logs
 *.log
+
+# report completi delle valutazioni (il riepilogo è docs/eval/risultati.md)
+docs/eval/*.json

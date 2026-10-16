@@ -36,11 +36,13 @@ Con numeri e non con opinioni. `backend/scripts/valuta_estrazione.py` confronta 
 
 | Estrattore | PDF digitali | Scansioni | Tempo | Costo per pratica |
 |---|---|---|---|---|
-| Regole | 54/54 (100%) | 0/54 (0%) | 0,1 s | 0 |
+| Regole | 54/54 (100%) | 22/54 (41%) con OCR tesseract, 0/54 senza | 0,1 s | 0 |
 | Claude (`claude-opus-5`) | da misurare | da misurare | | |
 | Ollama (`qwen2.5:7b`) + OCR | da misurare | da misurare | | |
 
-Il 100% delle regole sui PDF digitali non dice nulla sulla qualità: le regole sono scritte sul formato esatto delle pratiche demo. Il loro 0% sulle scansioni mostra invece perché servono i modelli.
+Il 100% delle regole sui PDF digitali non dice nulla sulla qualità: le regole sono scritte sul formato esatto delle pratiche demo. Sulle scansioni l'OCR recupera parte del testo, ma le regole leggono meno della metà dei campi e nessuna tabella dei locali: è il motivo per cui servono i modelli.
+
+Per compilare le righe di Claude e Ollama: `docker compose exec backend python scripts/eval_completo.py` scrive `docs/eval/risultati.md` con questa tabella e quella dell'agente (ADR 0002).
 
 ## Decisione provvisoria
 

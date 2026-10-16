@@ -5,8 +5,9 @@ import {
   Divider, Grid, Link, Paper, Stack, Tab, Tabs, TextField, ToggleButton, ToggleButtonGroup, Typography,
 } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
+import AgentePanel from '../components/AgentePanel';
 import EstrazionePanel from '../components/EstrazionePanel';
-import { ESITI, GRAVITA, downloadRelazione, getPratica } from '../services/pratiche';
+import { ESITI, GRAVITA, downloadRelazione, getAgente, getPratica } from '../services/pratiche';
 
 // La revisione del tecnico resta nel browser finché non esiste un backend multi-utente.
 const loadReview = (id) => {
@@ -53,6 +54,16 @@ function DifformitaCard({ d, stato, nota, onStato, onNota, onOpen }) {
         <Typography variant="caption" color="text.secondary" component="div" sx={{ mb: 1.5 }}>
           {d.riferimento_normativo}
         </Typography>
+        {d.fonti_normative?.length > 0 && (
+          <Box component="details" sx={{ mb: 1.5, typography: 'caption', color: 'text.secondary' }}>
+            <summary>Passaggi normativi usati dall'agente</summary>
+            {d.fonti_normative.map((n) => (
+              <Typography key={n.id} variant="caption" component="p" sx={{ mt: 0.5 }}>
+                <b>{n.citazione}</b> · {n.titolo}: {n.testo}
+              </Typography>
+            ))}
+          </Box>
+        )}
         <FonteChips fonti={d.fonti} onOpen={onOpen} />
         <Divider sx={{ my: 1.5 }} />
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5} alignItems={{ sm: 'center' }}>
@@ -76,32 +87,46 @@ function DifformitaCard({ d, stato, nota, onStato, onNota, onOpen }) {
 
 export default function PraticaDetail() {
   const { id } = useParams();
-  const [pratica, setPratica] = useState(null);
+  const [demo, setDemo] = useState(null);
+  const [agente, setAgente] = useState(null);
+  const [vista, setVista] = useState('demo');
   const [error, setError] = useState('');
   const [doc, setDoc] = useState({ file: null, pagina: 1, n: 0 });
-  const [review, setReview] = useState(() => loadReview(id));
+  const [reviews, setReviews] = useState(() => ({ demo: loadReview(id), agente: loadReview(`${id}-agente`) }));
   const [tecnico, setTecnico] = useState('');
   const [exporting, setExporting] = useState(false);
 
   useEffect(() => {
     getPratica(id)
       .then((p) => {
-        setPratica(p);
+        setDemo(p);
         setDoc({ file: p.documenti[0]?.file, pagina: 1, n: 0 });
       })
       .catch(() => setError('Pratica non trovata o backend non raggiungibile.'));
+    getAgente(id).then(setAgente).catch(() => {});
   }, [id]);
 
   useEffect(() => {
     try {
-      localStorage.setItem(`revisione-${id}`, JSON.stringify(review));
+      localStorage.setItem(`revisione-${id}`, JSON.stringify(reviews.demo));
+      localStorage.setItem(`revisione-${id}-agente`, JSON.stringify(reviews.agente));
     } catch {
       /* storage non disponibile: la revisione resta in memoria */
     }
-  }, [id, review]);
+  }, [id, reviews]);
 
   if (error) return <Box sx={{ p: 3 }}><Alert severity="error">{error}</Alert></Box>;
-  if (!pratica) return <Box sx={{ p: 3 }}><CircularProgress /></Box>;
+  if (!demo) return <Box sx={{ p: 3 }}><CircularProgress /></Box>;
+
+  const pratica = vista === 'agente' && agente ? agente : demo;
+  const chiave = pratica === agente ? 'agente' : 'demo';
+  const review = reviews[chiave];
+  const setReview = (f) => setReviews((r) => ({ ...r, [chiave]: f(r[chiave]) }));
+  const nuovoAgente = (a) => {
+    setAgente(a);
+    setVista('agente');
+    setReviews((r) => ({ ...r, agente: { stato: {}, note: {} } }));
+  };
 
   const openDoc = (file, pagina = 1) => setDoc((d) => ({ file, pagina, n: d.n + 1 }));
   const current = pratica.documenti.find((d) => d.file === doc.file);
@@ -116,7 +141,7 @@ export default function PraticaDetail() {
   const exportDocx = async () => {
     setExporting(true);
     try {
-      await downloadRelazione(id, { confermate, note: review.note, tecnico });
+      await downloadRelazione(id, { confermate, note: review.note, tecnico, origine: pratica.origine });
     } catch {
       setError('Export non riuscito: controlla che il backend sia avviato e riprova.');
     } finally {
@@ -135,9 +160,15 @@ export default function PraticaDetail() {
         {pratica.id} · {im.intestatario} · Piano {im.piano} · Foglio {im.foglio}, Part. {im.particella}
         {im.sub ? `, Sub. ${im.sub}` : ''}
       </Typography>
+      {agente && (
+        <ToggleButtonGroup size="small" exclusive value={chiave} onChange={(_, v) => v && setVista(v)} sx={{ mb: 2 }}>
+          <ToggleButton value="agente">Risultato dell'agente</ToggleButton>
+          <ToggleButton value="demo">Risultato atteso (demo)</ToggleButton>
+        </ToggleButtonGroup>
+      )}
       {pratica.origine === 'demo_ground_truth' && (
         <Alert severity="info" sx={{ mb: 2 }}>
-          Pratica dimostrativa con dati fittizi: le difformità sono precompilate e mostrano cosa produrrà l'analisi automatica. I dati dei documenti puoi estrarli davvero con l'AI.
+          Pratica dimostrativa con dati fittizi: qui vedi le difformità attese, scritte a mano. Con "Trova le difformità" le cerca l'agente e puoi confrontare.
         </Alert>
       )}
 
@@ -178,6 +209,9 @@ export default function PraticaDetail() {
                 onOpen={openDoc}
               />
             ))}
+
+            <AgentePanel praticaId={id} risultato={agente} attese={demo.difformita.map((d) => d.tipo)}
+              onRisultato={nuovoAgente} />
 
             <EstrazionePanel praticaId={id} onOpen={openDoc} />
 
