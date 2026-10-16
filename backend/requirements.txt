@@ -5,13 +5,11 @@ python-dotenv
 pydantic
 python-multipart
 qdrant-client==1.10.1
-sentence-transformers
+fastembed
 numpy
-transformers
 minio
 pypdf2
 pillow
-torch
 huggingface-hub
 faker
 reportlab
