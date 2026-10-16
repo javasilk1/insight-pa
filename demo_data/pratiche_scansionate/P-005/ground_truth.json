@@ -1,0 +1,109 @@
+{
+  "id": "P-005",
+  "scenario": "Villa entro 300 m dalla costa: ampliamento e piscina senza titolo in area vincolata.",
+  "dati_fittizi": true,
+  "immobile": {
+    "indirizzo": "Località Cala Serena, Via delle Dune 3",
+    "piano": "terra",
+    "intestatario": "Anna Fittizia",
+    "cf": "FTTNNA58H55Z999B",
+    "foglio": "31",
+    "particella": "77",
+    "sub": ""
+  },
+  "documenti": [
+    "01_concessione_edilizia.pdf",
+    "02_visura_catastale.pdf",
+    "03_planimetria_catastale.pdf",
+    "04_rilievo_stato_di_fatto.pdf"
+  ],
+  "esito_atteso": "non_conforme",
+  "sintesi": "Ampliamento e piscina realizzati senza titolo in area a vincolo paesaggistico costiero. Caso ad alto rischio, probabilmente non sanabile.",
+  "difformita_attese": [
+    {
+      "id": "D1",
+      "ambito": "edilizio_paesaggistico",
+      "tipo": "ampliamento_senza_titolo",
+      "gravita": "alta",
+      "entita": "+18,00 m² di superficie utile, circa 50,40 m³",
+      "descrizione": "Locale lavanderia in muratura addossato al fabbricato, assente nel progetto approvato.",
+      "valutazione": "Nuovo volume in area vincolata: l'accertamento di compatibilità paesaggistica non è ammesso per nuovi volumi, quindi è probabile l'obbligo di demolizione.",
+      "riferimento_normativo": "art. 142 c.1 lett. a e art. 167 c.4 D.Lgs. 42/2004; art. 31 DPR 380/2001",
+      "fonti": [
+        {
+          "file": "01_concessione_edilizia.pdf",
+          "pagina": 2
+        },
+        {
+          "file": "04_rilievo_stato_di_fatto.pdf",
+          "pagina": 1
+        }
+      ]
+    },
+    {
+      "id": "D2",
+      "ambito": "edilizio_paesaggistico",
+      "tipo": "piscina_senza_titolo",
+      "gravita": "alta",
+      "entita": "32,00 m²",
+      "descrizione": "Piscina interrata non prevista nel titolo e priva di autorizzazione paesaggistica.",
+      "valutazione": "Intervento che richiede titolo edilizio e autorizzazione paesaggistica preventiva.",
+      "riferimento_normativo": "art. 146 D.Lgs. 42/2004; DPR 380/2001",
+      "fonti": [
+        {
+          "file": "01_concessione_edilizia.pdf",
+          "pagina": 1
+        },
+        {
+          "file": "04_rilievo_stato_di_fatto.pdf",
+          "pagina": 1
+        }
+      ]
+    },
+    {
+      "id": "D3",
+      "ambito": "catastale",
+      "tipo": "planimetria_non_aggiornata",
+      "gravita": "media",
+      "descrizione": "La planimetria catastale del 1999 non riporta lavanderia e piscina.",
+      "valutazione": "Aggiornamento catastale possibile solo dopo la definizione della posizione edilizia.",
+      "riferimento_normativo": "art. 29 c.1-bis L. 52/1985",
+      "fonti": [
+        {
+          "file": "03_planimetria_catastale.pdf",
+          "pagina": 1
+        }
+      ]
+    }
+  ],
+  "dati_estratti_attesi": {
+    "01_concessione_edilizia.pdf": {
+      "tipo": "concessione edilizia",
+      "numero": "18/1998",
+      "data": "1998-02-27",
+      "sup_utile_m2": 102.0,
+      "vincolo_paesaggistico": true
+    },
+    "02_visura_catastale.pdf": {
+      "categoria": "A/7",
+      "classe": "1",
+      "consistenza_vani": 6.5,
+      "sup_catastale_m2": 128
+    },
+    "04_rilievo_stato_di_fatto.pdf": {
+      "sup_utile_m2": 120.0,
+      "distanza_mare_m": 240,
+      "piscina": true
+    }
+  },
+  "input_risk_engine": {
+    "superficie_catastale": 120.0,
+    "superficie_autorizzata": 102.0,
+    "distanza_mare": 240,
+    "has_permesso": true,
+    "has_piscina": true,
+    "has_permesso_piscina": false,
+    "satellite_change_pct": 25,
+    "documenti_contrastanti": false
+  }
+}

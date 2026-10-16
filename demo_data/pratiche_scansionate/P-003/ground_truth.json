@@ -1,0 +1,89 @@
+{
+  "id": "P-003",
+  "scenario": "Sottotetto non abitabile trasformato in camera e bagno; catasto aggiornato senza titolo.",
+  "dati_fittizi": true,
+  "immobile": {
+    "indirizzo": "Via Sassari 7",
+    "piano": "sottotetto",
+    "intestatario": "Giulia Prova",
+    "cf": "PRVGLI80M50Z999T",
+    "foglio": "15",
+    "particella": "1022",
+    "sub": "3"
+  },
+  "documenti": [
+    "01_permesso_di_costruire.pdf",
+    "02_visura_catastale.pdf",
+    "03_planimetria_catastale.pdf",
+    "04_rilievo_stato_di_fatto.pdf"
+  ],
+  "esito_atteso": "non_conforme",
+  "sintesi": "Sottotetto accessorio trasformato in camera e bagno senza titolo. La planimetria catastale del 2016 riporta lo stato di fatto ma non lo rende legittimo.",
+  "difformita_attese": [
+    {
+      "id": "D1",
+      "ambito": "edilizio",
+      "tipo": "mutamento_destinazione_uso",
+      "gravita": "alta",
+      "entita": "31,20 m² da accessorio non abitabile a residenziale",
+      "descrizione": "Il permesso autorizza il sottotetto come locale di sgombero non abitabile e vieta servizi igienici; oggi contiene camera, bagno e disimpegno.",
+      "valutazione": "Altezza media 1,95 m inferiore ai requisiti per locali abitabili: difficilmente sanabile come abitazione, probabile ripristino dell'uso accessorio.",
+      "riferimento_normativo": "art. 23-ter e art. 36-bis DPR 380/2001; DM 5/7/1975",
+      "fonti": [
+        {
+          "file": "01_permesso_di_costruire.pdf",
+          "pagina": 1
+        },
+        {
+          "file": "01_permesso_di_costruire.pdf",
+          "pagina": 2
+        },
+        {
+          "file": "04_rilievo_stato_di_fatto.pdf",
+          "pagina": 1
+        }
+      ]
+    },
+    {
+      "id": "D2",
+      "ambito": "catastale",
+      "tipo": "catasto_non_coerente_con_titolo",
+      "gravita": "media",
+      "descrizione": "La variazione catastale del 2016 rappresenta camera e bagno, ma non esiste un titolo edilizio corrispondente.",
+      "valutazione": "La planimetria catastale non costituisce titolo e non prova lo stato legittimo; va allineata dopo la regolarizzazione edilizia.",
+      "riferimento_normativo": "art. 9-bis c.1-bis DPR 380/2001",
+      "fonti": [
+        {
+          "file": "02_visura_catastale.pdf",
+          "pagina": 1
+        },
+        {
+          "file": "03_planimetria_catastale.pdf",
+          "pagina": 1
+        }
+      ]
+    }
+  ],
+  "dati_estratti_attesi": {
+    "01_permesso_di_costruire.pdf": {
+      "tipo": "permesso di costruire",
+      "numero": "45/2001",
+      "data": "2001-03-22",
+      "destinazione_sottotetto": "accessorio non abitabile",
+      "altezza_media_m": 1.95
+    },
+    "02_visura_catastale.pdf": {
+      "categoria": "A/7",
+      "classe": "2",
+      "consistenza_vani": 7,
+      "sup_catastale_m2": 141
+    },
+    "04_rilievo_stato_di_fatto.pdf": {
+      "locali_abitativi": [
+        "Camera",
+        "Bagno",
+        "Disimpegno"
+      ]
+    }
+  }
+}

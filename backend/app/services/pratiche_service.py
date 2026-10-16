@@ -19,10 +19,14 @@ def _default_dir() -> Path:
     if env:
         return Path(env)
     # docker: /demo_data montato dal compose; locale: cartella demo_data nella root del repo
-    for candidate in (Path("/demo_data/pratiche"), Path(__file__).resolve().parents[3] / "demo_data" / "pratiche"):
-        if candidate.is_dir():
-            return candidate
-    return Path("/demo_data/pratiche")
+    docker = Path("/demo_data/pratiche")
+    if docker.is_dir():
+        return docker
+    # nel container il file è in /app/services, quindi parents[3] non esiste
+    parents = Path(__file__).resolve().parents
+    if len(parents) > 3 and (parents[3] / "demo_data" / "pratiche").is_dir():
+        return parents[3] / "demo_data" / "pratiche"
+    return docker
 
 
 class PraticheService:
