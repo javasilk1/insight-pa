@@ -1,7 +1,8 @@
 from fastapi import APIRouter, BackgroundTasks, HTTPException
 from fastapi.responses import FileResponse, Response
 
-from models.pratica import AnalisiPratica, PraticaSintesi, RichiestaEstrazione, RichiestaRelazione
+from models.pratica import AnalisiPratica, PraticaSintesi, RichiestaAgente, RichiestaEstrazione, RichiestaRelazione
+from services.agente_service import agente_service
 from services.estrazione_service import estrazione_service
 from services.pratiche_service import pratiche_service
 
@@ -36,7 +37,7 @@ def documento(pratica_id: str, file: str):
 
 @router.post("/{pratica_id}/relazione")
 def relazione(pratica_id: str, req: RichiestaRelazione):
-    analisi = pratiche_service.analisi(pratica_id)
+    analisi = agente_service.ultimo(pratica_id) if req.origine == "agente" else pratiche_service.analisi(pratica_id)
     if not analisi:
         raise HTTPException(status_code=404, detail="Pratica non trovata")
     data = pratiche_service.relazione_docx(analisi, req)
@@ -69,3 +70,27 @@ def avvia_estrazione(pratica_id: str, req: RichiestaEstrazione, background: Back
         raise HTTPException(status_code=409, detail="Estrazione già in corso")
     background.add_task(estrazione_service.esegui, pratica_id, req.estrattore, cartella, files, attesi)
     return stato
+
+
+@router.post("/{pratica_id}/agente", response_model=AnalisiPratica)
+def esegui_agente(pratica_id: str, req: RichiestaAgente):
+    """Esegue l'agente di verifica: estrazione (o riuso), confronto, ricerca nelle norme, redazione."""
+    disponibili = {e["nome"]: e for e in estrazione_service.estrattori()}
+    for nome in {req.estrattore, req.redattore} - {"regole", "testo"}:
+        if not disponibili[nome]["disponibile"]:
+            raise HTTPException(status_code=400, detail=disponibili[nome]["nota"])
+    try:
+        analisi = agente_service.esegui(pratica_id, req.estrattore, req.redattore)
+    except Exception as e:  # chiave non valida, Ollama caduto a metà...
+        raise HTTPException(status_code=502, detail=f"Agente non riuscito: {e}")
+    if not analisi:
+        raise HTTPException(status_code=404, detail="Pratica non trovata")
+    return analisi
+
+
+@router.get("/{pratica_id}/agente", response_model=AnalisiPratica)
+def ultimo_agente(pratica_id: str):
+    analisi = agente_service.ultimo(pratica_id)
+    if not analisi:
+        raise HTTPException(status_code=404, detail="L'agente non è ancora stato eseguito su questa pratica")
+    return analisi

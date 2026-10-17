@@ -4,6 +4,7 @@ export const ESITI = {
   conforme: { label: 'Conforme', color: 'success' },
   non_conforme: { label: 'Non conforme', color: 'error' },
   conforme_edilizio_non_conforme_catastale: { label: 'Conforme edilizio, non conforme catastale', color: 'warning' },
+  documentazione_incompleta: { label: 'Documentazione incompleta', color: 'default' },
 };
 
 export const GRAVITA = {
@@ -16,8 +17,8 @@ export const getPratiche = async () => (await api.get('/pratiche')).data;
 
 export const getPratica = async (id) => (await api.get(`/pratiche/${id}`)).data;
 
-export const downloadRelazione = async (id, { confermate, note, tecnico }) => {
-  const res = await api.post(`/pratiche/${id}/relazione`, { confermate, note, tecnico }, { responseType: 'blob' });
+export const downloadRelazione = async (id, { confermate, note, tecnico, origine }) => {
+  const res = await api.post(`/pratiche/${id}/relazione`, { confermate, note, tecnico, origine }, { responseType: 'blob' });
   const url = window.URL.createObjectURL(res.data);
   const link = document.createElement('a');
   link.href = url;
@@ -41,3 +42,15 @@ export const getEstrazione = async (id) => {
 
 export const avviaEstrazione = async (id, estrattore) =>
   (await api.post(`/pratiche/${id}/estrazione`, { estrattore })).data;
+
+export const getAgente = async (id) => {
+  try {
+    return (await api.get(`/pratiche/${id}/agente`)).data;
+  } catch (e) {
+    if (e.response?.status === 404) return null;
+    throw e;
+  }
+};
+
+export const eseguiAgente = async (id, estrattore, redattore) =>
+  (await api.post(`/pratiche/${id}/agente`, { estrattore, redattore })).data;
