@@ -104,7 +104,10 @@ def main(scelti: list[str], ricerca: str):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("estrattori", nargs="*", choices=["regole", "claude", "ollama"])
+    # niente choices: con nargs="*" Python 3.11 rifiuta la lista vuota ("invalid choice: []")
+    parser.add_argument("estrattori", nargs="*", help="regole, claude, ollama (vuoto: tutti i disponibili)")
     parser.add_argument("--ricerca", choices=["parole", "semantica"], default="semantica")
     args = parser.parse_args()
+    if sconosciuti := set(args.estrattori) - {"regole", "claude", "ollama"}:
+        parser.error(f"estrattori sconosciuti: {', '.join(sorted(sconosciuti))}")
     main(args.estrattori, args.ricerca)
